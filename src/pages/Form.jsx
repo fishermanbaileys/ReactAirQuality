@@ -12,7 +12,8 @@ const Container = styled.div`
 
 const Wrapper = styled.div`
   text-align:center;
-  align-contents:center
+  align-contents:center;
+  height:100vh;
 `;
 
 
@@ -30,17 +31,12 @@ const Form = () => {
   const passCityData = (data) => {
     setCityData(data);
   };
-
-
-
   
   return (
     <Container>
       <Wrapper>
-      <Countries passCountryData={passCountryData} passCityData={passCityData}/>
-      <h2>{countryData}</h2>
-      <h2>{cityData}</h2>
-      <Tiles props={cityData}></Tiles>
+        <Countries passCountryData={passCountryData} passCityData={passCityData}/>
+        <Tiles props={[countryData, cityData]}></Tiles>
       </Wrapper>
     </Container>  
   )

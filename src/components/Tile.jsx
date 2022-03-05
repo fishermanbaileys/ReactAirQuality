@@ -18,71 +18,49 @@ const Info = styled.div`
 `;
 
 const Container = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(2px, 1fr));
-  margin: 2em;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(2px, 1fr));
+    margin: 2em;
 `;
 
 const BoxContainer = styled.div`
     gap:3px;
-    min-width: 290px;
-    height: 340px;
+    max-width: 320px;
+    min-height: 380px;
+    border-radius:10px;
     display: flex;
     align-items: center;
     flex-direction:column;
-    justify-content: center;
-    background-color: grey;
+    justify-content: start;
+    background-color: #DCE1E9;
     position: relative;
-    
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+
     &:hover ${Info}{
     opacity: 1;
     }
 `;
 
-const Circle = styled.div`
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    background-color: white;
-    position: absolute;
+const Updated = styled.p`
+    font-weight:700;
+    font-size:18px;
 `;
 
-const Image = styled.img`
-    height: 75%;
-    z-index: 2;
-`;
 
-const Icon = styled.div`
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 10px;
-    transition: all 0.5s ease;
-    &:hover {
-    background-color: #e9f5f5;
-    transform: scale(1.1);
-    }
-`;
-
-const Item = styled.div`
-    display:flex;
-    flex-direction: row;
-
-`;
-
-const Tile = ({locationId} ) => {
+const Tile = ({id, city, name, entity, country, sensorType, lastUpdated}) => {
     return (
     <Container>
         <BoxContainer>
-       
-        <h2>Location ID:{locationId}</h2>
-       
-    
+            <Updated>Last Updated: {lastUpdated}</Updated>
+            <h4>Location ID {id}</h4>
+            <h2>{name}</h2>
             
+            <p>Located in {city || "No City"}, {country}</p>
+            <h4>{entity}</h4>
+            <h4>{sensorType}</h4>
+            <h2>{city}</h2>
+    
+
         </BoxContainer>
     </Container>
     );

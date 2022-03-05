@@ -6,10 +6,13 @@ import styled from 'styled-components';
 const Wrapper = styled.div`
   display:flex;
   justify-content:center;
-  gap:40px;
-  z-index:999;
+  gap:30px;
 `;
 
+const Title = styled.h2`
+  font-size:20px;
+  margin: 0;
+`
 
 
 const Countries = (props) => {
@@ -73,7 +76,7 @@ const Countries = (props) => {
     
     return (
     <Wrapper>
-      
+      <Title>Countries:</Title>
         <select on
           disabled={loading}
           value={value}
@@ -86,9 +89,9 @@ const Countries = (props) => {
             </option>
           ))}
         </select>
-     
+        <Title>Cities:</Title>
         <select
-          
+        
           value={cvalue}
           onChange={(e) => setcValue(e.currentTarget.value)}
           
