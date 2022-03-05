@@ -1,32 +1,48 @@
-import React, { useState } from 'react';
-import Cities from '../components/Cities';
+import React, { useState, useRef } from 'react';
+import Tiles from '../components/Tiles';
+import Header from '../components/Header'
 import Countries from '../components/Countries';
 import styled from 'styled-components';
 
-const Wrapper = styled.div`
-    display:flex;
-    flex-direction: row;
-    gap:30px;
+
+const Container = styled.div`
+    text-align:center;
+    
 `;
+
+const Wrapper = styled.div`
+  text-align:center;
+  align-contents:center
+`;
+
+
 
 const Form = () => {
   
 //take in from Countries 
-  const [childData, setChildData] = useState("");
-
-  const passData = (data) => {
-    setChildData(data);
+  const [countryData, setCountryData] = useState();
+  const [cityData, setCityData] = useState();
+  //moving country data into parent
+  const passCountryData = (data) => {
+    setCountryData(data);
   };
-  
 
+  const passCityData = (data) => {
+    setCityData(data);
+  };
+
+
+
+  
   return (
-    <Wrapper>
-    
-    <Countries passData={passData}/>
-    <Cities countrytoCity={childData}/>
-    <button>Submit</button>
-    
-    </Wrapper>  
+    <Container>
+      <Wrapper>
+      <Countries passCountryData={passCountryData} passCityData={passCityData}/>
+      <h2>{countryData}</h2>
+      <h2>{cityData}</h2>
+      <Tiles props={cityData}></Tiles>
+      </Wrapper>
+    </Container>  
   )
 };
 

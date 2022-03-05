@@ -2,7 +2,6 @@
 import './App.css';
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import Cities from './components/Cities';
 import Form from './pages/Form';
 
 const Container = styled.div`
