@@ -1,7 +1,10 @@
 
 import './App.css';
 import styled from 'styled-components';
-import Form from './pages/Form';
+import CardSelector from './pages/CardSelector';
+import CardData from './pages/CardData';
+import { Routes, Route, Link } from "react-router-dom";
+import Tiles from './components/Tiles';
 
 const Container = styled.div`
   font-family: Arial, sans-serif;
@@ -16,31 +19,17 @@ const Wrapper = styled.div`
   
 `;
 
-const Header = styled.h1`
-  text-align:center;
-  font-size: 50px;
-  width:100%;
-  height:100px;
-  color:white;
-  background-color:#0A2342;
-`;
-
-const Headerthin = styled.span`
-  font-weight: 200;
-`;
-
-const App = (props) => {
 
 
-  
-  
+const App = () => {
 
   return (
     <Container>
       <Wrapper>
-        <Header>Air Quality <Headerthin>In United States</Headerthin></Header>
-        <Form/>
-        
+        <Routes>
+            <Route path="/" element={<CardSelector/>}></Route>
+            <Route path="location/:id" element={<CardData/>} ></Route>
+        </Routes>
       </Wrapper>
     </Container>
   )

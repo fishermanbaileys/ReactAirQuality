@@ -1,5 +1,8 @@
 import React from 'react'
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+
+
 
 const Info = styled.div`
     opacity: 0;
@@ -54,13 +57,13 @@ const Tile = ({id, city, name, entity, country, sensorType, lastUpdated}) => {
             <Updated>Last Updated: {lastUpdated}</Updated>
             <h4>Location ID {id}</h4>
             <h2>{name}</h2>
-            
             <p>Located in {city || "No City"}, {country}</p>
             <h4>{entity}</h4>
             <h4>{sensorType}</h4>
             <h2>{city}</h2>
-    
-
+            <Link to={`/location/${id}`}>
+            <button>More Data</button>
+            </Link>
         </BoxContainer>
     </Container>
     );

@@ -19,14 +19,16 @@ const Countries = (props) => {
     
     
     const [loading, setLoading] = useState(true);
+    //countries states
+    const [items, setItems] = useState([{ label: "Loading ...", value: "" }]);
+    const [value, setValue] = useState("US");
 
-    const [items, setItems] = useState([]);
-    const [value, setValue] = useState("Countries ABV");
-
-
+    //cities states
     const [citems, setcItems] = useState([]);
-    const [cvalue, setcValue] = useState("");
+    const [cvalue, setcValue] = useState("AMADOR");
     
+
+
 
     useEffect(() => {
       let unmounted = false;
@@ -53,7 +55,7 @@ const Countries = (props) => {
             setcItems(
               bodyc.results.map(({ city }) => ({ label: city, value: city }))
             );
-            
+            setLoading(false);
           }
 
 
@@ -65,15 +67,10 @@ const Countries = (props) => {
     }, [value[0]+value[1]]);
 
     const handleSubmit = () => {
-      
       props.passCountryData(value);
-      props.passCityData(cvalue)
-      console.log(value)
-      console.log(cvalue)
-      
+      props.passCityData(cvalue);
     };
-  
-    
+
     return (
     <Wrapper>
       <Title>Countries:</Title>
@@ -81,22 +78,27 @@ const Countries = (props) => {
           disabled={loading}
           value={value}
           onChange={(e) => setValue(e.currentTarget.value)}
+          onClick={(e) => setcValue("Select A City")}
+          
         >
-          <option selected> Select A Country</option>
+          <option disabled selected> Select A Country</option>
           {items.map(({ label, value, val}) => (
-            <option key={value} value={value}>
+            <option key={value} value={value} >
               {val + " - " + label}
             </option>
           ))}
         </select>
         <Title>Cities:</Title>
         <select
-        
+ 
+          disabled={loading}
+          disabled={Object.keys(citems).length === 0}
           value={cvalue}
           onChange={(e) => setcValue(e.currentTarget.value)}
           
         >
           <option disabled selected>Select A City</option>
+          
           {citems.map(({ label, value }) => (
             <option key={value} value={value}>
               {label}
