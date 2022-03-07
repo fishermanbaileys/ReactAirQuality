@@ -4,15 +4,37 @@ import styled from 'styled-components';
 //I did not label this file correct it handles countries and states
 
 const Wrapper = styled.div`
+
+`;
+
+const ButtonBar = styled.div`
+  padding-top:40px;
   display:flex;
   justify-content:center;
   gap:30px;
 `;
 
+
+
 const Title = styled.h2`
+  
   font-size:20px;
   margin: 0;
 `
+
+const Select = styled.select`
+  font-size:12px;
+  padding: 3px;
+  cursor: pointer;
+  border-radius:5px;
+  border: 2px solid #236f8a;
+  background-color:white;
+  font-weight:600px;
+`;
+
+const Option = styled.option`
+
+`;
 
 
 const Countries = (props) => {
@@ -73,41 +95,42 @@ const Countries = (props) => {
 
     return (
     <Wrapper>
-      <Title>Countries:</Title>
-        <select on
-          disabled={loading}
-          value={value}
-          onChange={(e) => setValue(e.currentTarget.value)}
-          onClick={(e) => setcValue("Select A City")}
-          
-        >
-          <option disabled selected> Select A Country</option>
-          {items.map(({ label, value, val}) => (
-            <option key={value} value={value} >
-              {val + " - " + label}
-            </option>
-          ))}
-        </select>
-        <Title>Cities:</Title>
-        <select
- 
-          disabled={loading}
-          disabled={Object.keys(citems).length === 0}
-          value={cvalue}
-          onChange={(e) => setcValue(e.currentTarget.value)}
-          
-        >
-          <option disabled selected>Select A City</option>
-          
-          {citems.map(({ label, value }) => (
-            <option key={value} value={value}>
-              {label}
-            </option>
-          ))}
-          
-        </select> 
-
-        <button onClick={handleSubmit}>Submit</button>
+      <ButtonBar>
+        <Title>Countries:</Title>
+          <Select on
+            disabled={loading}
+            value={value}
+            onChange={(e) => setValue(e.currentTarget.value)}
+            onClick={(e) => setcValue("Select A City")}
+            
+          >
+            <option disabled selected> Select A Country</option>
+            {items.map(({ label, value, val}) => (
+              <option key={value} value={value} >
+                {val + " - " + label}
+              </option>
+            ))}
+          </Select>
+          <Title>Cities:</Title>
+          <Select
+            menuPlacement="top"
+            disabled={loading}
+            disabled={Object.keys(citems).length === 0}
+            value={cvalue}
+            onChange={(e) => setcValue(e.currentTarget.value)}
+            
+          >
+            <option disabled selected>Select A City</option>
+            
+            {citems.map(({ label, value }) => (
+              <Option key={value} value={value}>
+                {label}
+              </Option>
+            ))}
+            
+          </Select> 
+          <button onClick={handleSubmit}>Submit</button>
+        </ButtonBar>
     </Wrapper>        
     );
 

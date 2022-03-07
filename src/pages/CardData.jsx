@@ -4,14 +4,16 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Header from '../components/Header'
 import {
-    ScatterChart,
-    Scatter,
-    XAxis,
-    YAxis,
-    CartesianGrid,
-    Tooltip,
-    LabelList
-  } from "recharts";
+  Chart as ChartJS,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Tooltip,
+  Legend,
+} from 'chart.js/auto';
+import { Scatter, Line } from 'react-chartjs-2';
+
+
 
 const Container = styled.div`
  
@@ -22,24 +24,24 @@ const Wrapper = styled.div`
 `;
 
 const Test = styled.div`
-
+  width:80vw;
+  hieght:40vh;
 `;
 const CardData = () => {
     let { id } = useParams();
 
     
-
-    
+    const [chartData, setChartData] = useState({})
     const [loading, setLoading] = useState(true);
-    const [items, setItems] = useState([{ label: "Loading ...", value: "" }]);
-    const [value, setValue] = useState("");
-    
+    const [items, setItems] = useState([]);
+
+
     const object = items;
     useEffect(() => {
       let unmounted = false;
       async function getCharacters() {
         const response = await fetch(
-          "https://docs.openaq.org/v2/measurements?date_from=2000-01-01T00%3A00%3A00%2B00%3A00&date_to=2022-03-06T07%3A09%3A00%2B00%3A00&limit=100&page=1&offset=0&sort=desc&radius=1000&location_id=" + id + "&order_by=datetime"
+          "https://docs.openaq.org/v2/measurements?date_from=2000-01-01T00%3A00%3A00%2B00%3A00&date_to=2022-03-06T07%3A09%3A00%2B00%3A00&limit=50&page=1&offset=0&sort=desc&radius=1000&location_id=" + id + "&order_by=datetime"
         );
         const body = await response.json();
         if (!unmounted) {
@@ -56,6 +58,7 @@ const CardData = () => {
     }, [id]);
 
 
+  
     var location = items.map(function(i) {
         return i.location;
       });
@@ -77,49 +80,61 @@ const CardData = () => {
 
     var val = items.map(function(i){
         return i.value;
-    })
+    });
 
-    var dates = items.map(function(i){
-        return i.date;
-    })
+    var dates = items.map(function(id){
+        return id.date.utc;
+    });
 
-    const data = [
-        { x: 100, y: 200, z: 200 },
-        { x: 120, y: 100, z: 260 },
-        { x: 170, y: 300, z: 400 },
-        { x: 140, y: 250, z: 280 },
-        { x: 150, y: 400, z: 500 },
-        { x: 110, y: 280, z: 200 }
-      ];
-      
+    var param = items.map(function(id){
+      return id.parameter;
+  });
+
+  var vals = items.map(function(id){
+    return id.value;
+  });
+
+  function isBigEnough(value) {
+    return value === "pm1"
+  }
 
 
-    console.log(data)
+  let combine = param.map((e, i) => [e, vals[i]]);
 
+  let sorted = combine.sort();
+ 
+  console.log(sorted)
+
+
+
+    const formatDate = (dateString) => {
+      const options = {year: 'numeric', month: 'long',day: 'numeric', hour: '2-digit', minute: '2-digit',  }
+      return new Date(dateString).toLocaleDateString(undefined, options)
+    }
+    dates.forEach((element, index) => {
+      dates[index] = formatDate(element);
+    });
+
+    const labels = dates;
+    const datass = {
+    
+      labels,
+      datasets: [
+        {
+          label: 'PPQ',
+          data: val,
+          backgroundColor: '#236f8a',
+        }
+      ],
+    };
+
+  
   return (
       <Container>
           <Wrapper>
-            
-
             <Header props={[location[0],country[0],city[0],entity[0],grade[0]]}></Header>
-                <ScatterChart
-                    width={400}
-                    height={400}
-                    margin={{
-                        top: 20,
-                        right: 20,
-                        bottom: 20,
-                        left: 20
-                    }}
-                    >
-                    <CartesianGrid />
-                    <XAxis type="number" dataKey="x" name="stature" unit="cm" />
-                    <YAxis type="number" dataKey="y" name="weight" unit="kg" />
-                    <Tooltip cursor={{ strokeDasharray: "3 3" }} />
-                    <Scatter name="A school" data={data} fill="#8884d8">
-                        <LabelList dataKey="x" />
-                    </Scatter>
-                </ScatterChart>
+            <Test></Test>
+            <Line data={datass} />
           </Wrapper>
       </Container>
   )

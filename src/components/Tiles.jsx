@@ -4,7 +4,7 @@ import Tile from './Tile'
 import { useState, useEffect } from 'react'
 
 const Container = styled.div`
-    padding:40px;
+  
 `
 const Wrapper = styled.div`
     padding: 20px;
@@ -12,6 +12,25 @@ const Wrapper = styled.div`
     flex-wrap: wrap;
     justify-content: center;
 `
+const ResWrapper = styled.div`
+  padding:10px;
+  display:flex;
+  align-contents:center;
+  justify-content:center;
+`;
+const Result = styled.div`
+  display:flex;
+  
+  font-size:20px;
+  padding:16px;
+
+`;
+
+const Bold = styled.div`
+ 
+  font-size:20px;
+  font-weight:600;
+`;
 
 
 const Tiles = ({props}) => {
@@ -51,7 +70,7 @@ const Tiles = ({props}) => {
       
         if (!unmounted) {
           setItems(
-            body.results.map(({ id, city, name, entity, country, sensorType, lastUpdated }) => ({ id: id, city: city, name: name, entity: entity, country: country, sensorType:sensorType, lastUpdated: lastUpdated}))
+            body.results.map(({ id, city, name, entity, country, sensorType, lastUpdated, firstUpdated, parameters, sources, measurements }) => ({ id: id, city: city, name: name, entity: entity, country: country, sensorType:sensorType, lastUpdated: lastUpdated,  firstUpdated: firstUpdated, parameters: parameters, sources: sources, measurements: measurements }))
           );
           setLoading(false);
         }
@@ -62,22 +81,36 @@ const Tiles = ({props}) => {
       };
     }, [props]);
 
-      
+  var entity = items.map(function(i) {
+      return i.parameters;
+  });
 
+
+  //put parameters units into a set types in there so ther wont be any duplicates
+
+  console.log(entity)
+ 
   const formatDate = (dateString) => {
     const options = {year: 'numeric', month: 'long',day: 'numeric', hour: '2-digit', minute: '2-digit',  }
     return new Date(dateString).toLocaleDateString(undefined, options)
   }
 
+  function separator(numb) {
+    var str = numb.toString().split(".");
+    str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return str.join(".");
+  }
+
   return (
     <Container>
-      <h2>{props[1]}</h2>
-      <Wrapper>
-    
-      {items.map(({id, city, name, entity, country, sensorType, lastUpdated}) => (
-        <Tile id={id}  city={city}  name={name} entity={entity} country={country} country={country} sensorType={sensorType} lastUpdated={formatDate(lastUpdated)}>
-        </Tile>
-      ))}
+      <ResWrapper>
+      <Result><Bold>Results:</Bold>{props[1]}, {props[0]}</Result>
+      </ResWrapper>
+        <Wrapper>    
+        {items.map(({id, city, name, entity, country, sensorType, lastUpdated, firstUpdated, parameters, sources, measurements}) => (
+          <Tile id={id}  city={city}  name={name} entity={entity} country={country} country={country} sensorType={sensorType} lastUpdated={formatDate(lastUpdated)} firstUpdated={formatDate(firstUpdated)} parameters={parameters} sources={sources.id} measurements={separator(measurements)}>
+          </Tile>
+        ))}
 
       
       </Wrapper>
