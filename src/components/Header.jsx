@@ -2,13 +2,19 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Container = styled.div`
- 
+  width:100vw;
+  padding-bottom:30px;
 `;
+
 
 const Wrapper = styled.div`
   display:flex;
+  width:100vw;
+  padding:40px;
   flex-direction:column;
   gap:10px;
+  background: #e5e5e5;
+  box-shadow: rgba(50,50,93,0.25) 0px 13px 27px -5px,rgba(0,0,0,0.3) 0px 8px 16px -8px;
 `;
 
 const H1 = styled.h1`
@@ -41,6 +47,10 @@ const Owned = styled.div`
     font-weight:600;
 `;
 
+const H4 = styled.p`
+  margin:0px;
+`;
+
 
 
 const Header = ({props}) => {
@@ -50,9 +60,9 @@ const Header = ({props}) => {
   return (
     <Container>
         <Wrapper>
-            <h4>Location:</h4>
+            <H4>Location:</H4>
            <H1>{props[0]}</H1>
-           <H2>Located in: {props[2]},{props[1]}</H2>
+           <H2>Located in: {props[2] || 'N/A' },{props[1]}</H2>
            <Owned>{props[3]}</Owned> 
            <SensorType>{props[4]}</SensorType>
         </Wrapper>

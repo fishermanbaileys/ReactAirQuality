@@ -142,8 +142,9 @@ const Button = styled.button`
 
 
 
-const Tile = ({id, city, name, entity, country, sensorType, lastUpdated, firstUpdated, source, measurements}) => {
-
+const Tile = ({id, city, name, entity, country, sensorType, lastUpdated, firstUpdated, measurements, Param}) => {
+    
+    
 
     
     return (
@@ -154,11 +155,12 @@ const Tile = ({id, city, name, entity, country, sensorType, lastUpdated, firstUp
                 <Updated>Last Updated: {lastUpdated}</Updated>
                 <Name>{name}</Name>
                 <Location>Location ID {id}</Location>
-                <LocatedIn>Located in {city}, {country}</LocatedIn>
+                <LocatedIn>Located in {city || 'N/A'}, {country}</LocatedIn>
                 <OwnedBy>Owned By:<Owned>{entity}</Owned></OwnedBy>
                 <OwnedBy>Sensor Grade:<SensorType>{sensorType}</SensorType></OwnedBy>
                 <TotalMeasure><Bold>Started Collecting Data:</Bold>{firstUpdated}</TotalMeasure>
                 <TotalMeasure><Bold>Total Measurements:</Bold> {measurements}</TotalMeasure>
+                <TotalMeasure><Bold>Types Of Data: </Bold> {Param}</TotalMeasure>
                 <ButtonWrap>
                 <Link to={`/location/${id}`}>
                 <Button>View More Data</Button>

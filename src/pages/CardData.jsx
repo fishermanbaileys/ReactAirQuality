@@ -12,6 +12,7 @@ import {
   Legend,
 } from 'chart.js/auto';
 import { Scatter, Line } from 'react-chartjs-2';
+import TopBar from '../components/TopBar';
 
 
 
@@ -24,6 +25,7 @@ const Wrapper = styled.div`
 `;
 
 const Test = styled.div`
+
   width:80vw;
   hieght:40vh;
 `;
@@ -86,38 +88,78 @@ const CardData = () => {
         return id.date.utc;
     });
 
-    var param = items.map(function(id){
-      return id.parameter;
+    
+
+  const Parameters = new Set();
+
+  
+
+  items.forEach(item => {
+    for (let key in item) {
+      if (key === 'parameter'){
+        Parameters.add(item.parameter);
+      }
+    }
   });
 
-  var vals = items.map(function(id){
-    return id.value;
-  });
 
-  let combine = param.map((e, i) => [e, vals[i]]);
+  console.log(Parameters);
 
-  let sorted = combine.sort();
+
+  var pm1 = [];
+  var pm25 = [];
+  var um010 = [];
+  var um025 = [];
+  var um100 = [];
  
-  console.log(sorted);
+  items.forEach(item => {
+    for (let key in item) {
+        if(key === 'parameter' && item[key] === "pm1" ){
+          pm1.push(item.value);
+        }
+        else if(key === 'parameter' && item[key] === "um010" ){
+          um010.push(item.value);
+        }
+        else if(key === 'parameter' && item[key] === "pm25" ){
+          pm25.push(item.value);
+        }
+        else if(key === 'parameter' && item[key] === "um025" ){
+          um025.push(item.value);
+        }
+        else if(key === 'parameter' && item[key] === "um100" ){
+          um100.push(item.value);
+        }
+        else if(key === 'parameter' && item[key] === "pm25" ){
+          pm25.push(item.value);
+        }
 
-    const formatDate = (dateString) => {
+    }
+  });
+
+  const formatDate = (dateString) => {
       const options = {year: 'numeric', month: 'long',day: 'numeric', hour: '2-digit', minute: '2-digit',  }
       return new Date(dateString).toLocaleDateString(undefined, options)
     }
+  
     dates.forEach((element, index) => {
       dates[index] = formatDate(element);
     });
 
     const labels = dates;
-    const datass = {
+    const data = {
     
       labels,
       datasets: [
         {
-          label: param[1],
-          data: val,
+          label: "pm25",
+          data: pm25,
           backgroundColor: '#236f8a',
-        }
+        },
+        {
+          label: 'pm1',
+          data: pm1,
+          backgroundColor: '#00000',
+        },
       ],
     };
 
@@ -125,9 +167,12 @@ const CardData = () => {
   return (
       <Container>
           <Wrapper>
-            <Header props={[location[0],country[0],city[0],entity[0],grade[0]]}></Header>
-            <Test></Test>
-            <Line data={datass} />
+            
+            <Header props={[location[0],country[0],city[0],entity[0],grade[0]]}/>
+            <TopBar params={Parameters}/>
+            <Test>
+            <Line data={data}/>
+            </Test>
           </Wrapper>
       </Container>
   )

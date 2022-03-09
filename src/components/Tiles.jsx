@@ -81,15 +81,7 @@ const Tiles = ({props}) => {
       };
     }, [props]);
 
-  var entity = items.map(function(i) {
-      return i.parameters;
-  });
 
-
-  //put parameters units into a set types in there so ther wont be any duplicates
-
-  console.log(entity)
- 
   const formatDate = (dateString) => {
     const options = {year: 'numeric', month: 'long',day: 'numeric', hour: '2-digit', minute: '2-digit',  }
     return new Date(dateString).toLocaleDateString(undefined, options)
@@ -101,6 +93,7 @@ const Tiles = ({props}) => {
     return str.join(".");
   }
 
+
   return (
     <Container>
       <ResWrapper>
@@ -108,7 +101,7 @@ const Tiles = ({props}) => {
       </ResWrapper>
         <Wrapper>    
         {items.map(({id, city, name, entity, country, sensorType, lastUpdated, firstUpdated, parameters, sources, measurements}) => (
-          <Tile id={id}  city={city}  name={name} entity={entity} country={country} country={country} sensorType={sensorType} lastUpdated={formatDate(lastUpdated)} firstUpdated={formatDate(firstUpdated)} parameters={parameters} sources={sources.id} measurements={separator(measurements)}>
+          <Tile  id={id}  city={city}  name={name} entity={entity} country={country} country={country} sensorType={sensorType} lastUpdated={formatDate(lastUpdated)} firstUpdated={formatDate(firstUpdated)} parameters={parameters} sources={sources.id} measurements={separator(measurements)}>
           </Tile>
         ))}
 
