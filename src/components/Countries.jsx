@@ -114,7 +114,6 @@ const Countries = (props) => {
           <Title>Cities:</Title>
           <Select
             menuPlacement="top"
-            disabled={loading}
             disabled={Object.keys(citems).length === 0}
             value={cvalue}
             onChange={(e) => setcValue(e.currentTarget.value)}

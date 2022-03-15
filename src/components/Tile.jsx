@@ -14,8 +14,9 @@ const Wrapper = styled.div`
 `;
 
 const BoxContainer = styled.div`
-    width: 400px;
-    height: 500px;
+    
+    width: 480px;
+    height: 560px;
     border-radius:10px;
     background-color: #f6f1f1;
     position: relative;
@@ -26,7 +27,7 @@ const BoxContainer = styled.div`
 `;
 
 const BoxWrapper = styled.div`
-    padding:18px;
+    padding:20px;
     display:flex;
     flex-direction:column;
 
@@ -142,25 +143,24 @@ const Button = styled.button`
 
 
 
-const Tile = ({id, city, name, entity, country, sensorType, lastUpdated, firstUpdated, measurements, Param}) => {
+const Tile = ({id, city, name, entity, country, sensorType, lastUpdated, firstUpdated, measurements, params}) => {
     
-    
+    const comaParams = [...params].join(",");
 
-    
     return (
     <Container>
         <Wrapper>
             <BoxContainer>
                 <BoxWrapper>
                 <Updated>Last Updated: {lastUpdated}</Updated>
-                <Name>{name}</Name>
+                <Name>{name || "N/A"}</Name>
                 <Location>Location ID {id}</Location>
-                <LocatedIn>Located in {city || 'N/A'}, {country}</LocatedIn>
+                <LocatedIn>Located in {city}, {country}</LocatedIn>
                 <OwnedBy>Owned By:<Owned>{entity}</Owned></OwnedBy>
                 <OwnedBy>Sensor Grade:<SensorType>{sensorType}</SensorType></OwnedBy>
                 <TotalMeasure><Bold>Started Collecting Data:</Bold>{firstUpdated}</TotalMeasure>
                 <TotalMeasure><Bold>Total Measurements:</Bold> {measurements}</TotalMeasure>
-                <TotalMeasure><Bold>Types Of Data: </Bold> {Param}</TotalMeasure>
+                <TotalMeasure><Bold>Types Of Data: </Bold> {comaParams || "N/A"}</TotalMeasure>
                 <ButtonWrap>
                 <Link to={`/location/${id}`}>
                 <Button>View More Data</Button>

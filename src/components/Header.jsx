@@ -60,7 +60,7 @@ const Header = ({props}) => {
   return (
     <Container>
         <Wrapper>
-            <H4>Location:</H4>
+           <H4>Location:</H4>
            <H1>{props[0]}</H1>
            <H2>Located in: {props[2] || 'N/A' },{props[1]}</H2>
            <Owned>{props[3]}</Owned> 
