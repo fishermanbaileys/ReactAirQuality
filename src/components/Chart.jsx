@@ -1,15 +1,29 @@
 import React from 'react'
 import styled from 'styled-components'
-import GraphTabs from '../components/GraphTabs';
+import 'chartjs-adapter-moment';
+import { Scatter, Line } from 'react-chartjs-2';
+import moment from 'moment';
 import {
   Chart as ChartJS,
+  TimeScale,
   LinearScale,
   PointElement,
   LineElement,
+  Title,
   Tooltip,
-  Legend,
-} from 'chart.js/auto';
-import { Scatter, Line } from 'react-chartjs-2';
+  Legend
+} from 'chart.js';
+ChartJS.register(
+  TimeScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+
 
 const Container = styled.div`
 
@@ -34,65 +48,49 @@ const Chart = ({props}) => {
     }
   });
 
-
-
-
-let dates = datas.map(function(id){
-  return id.date.utc;
-});
-
-let values = datas.map(function(id){
-  return id.value;
-});
-
-const formatDate = (dateString) => {
-  const options = {year: 'numeric', month: 'long',day: 'numeric', hour: '2-digit', minute: '2-digit',  }
-  return new Date(dateString).toLocaleDateString(undefined, options)
-}
-
-dates.forEach((element, index) => {
-  dates[index] = formatDate(element);
-  });
-
-  
-  const labels = dates;
+let test2 = datas.map((x, index) =>({x: x.date.local, y: x.value}));
 
   const data = {
-  
-    labels,
+
     datasets: [
       {
-        data: values,
-        borderColor: 'rgb(53, 162, 235)',
-        backgroundColor: '#faa204',
+        data: test2,
+        backgroundColor: 'rgb(53,162,235)',
       },
+ 
       
     ],
   };
-
-  const options = {
+   const options = {
     responsive: true,
       scales: {
         yAxes: {
-            title: {
-                display: true,
-                text: props[1],
-                font: {
-                    size: 15
-                }
-            },
-            ticks: {
-                precision: 0
-            }
-        },
+          title: {
+              display: true,
+              text: props[1],
+              font: {
+                  size: 15
+              }
+          },
+          ticks: {
+              precision: 0
+          }
+      },
         xAxes: {
-            title: {
-                display: true,
-                text: "Dates",
-                font: {
-                    size: 15
-                }
-            }
+          
+          type: 'time',
+                time: {
+                    unit: 'day'
+          },
+
+          title: {
+            display: true,
+            text: "Dates",
+            font: {
+                size: 15
+          }
+        }
+          
         }
     },
     plugins: {
@@ -100,16 +98,12 @@ dates.forEach((element, index) => {
             display: false,
         }
     }
+    
   };
-
-
-
-
-  
   return (
     <Container>
       <Wrapper>
-        <Line options={options} data={data}/>
+        <Scatter options={options} data={data}/>
       </Wrapper>
     </Container>
   )

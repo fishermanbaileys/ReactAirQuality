@@ -29,20 +29,24 @@ const CardData = () => {
     let { id } = useParams();
     const [loading, setLoading] = useState(true);
     const [items, setItems] = useState([]);
-// "https://docs.openaq.org/v2/measurements?date_from=2021-01-01T00%3A00%3A00%2B00%3A00&date_to=2022-03-06T07%3A09%3A00%2B00%3A00&limit=100&page=1&offset=0&sort=desc&radius=1000&location_id=" + id + "&order_by=datetime"
+    const [found, setFound] = useState([]);
+    
+
     useEffect(() => {
       let unmounted = false;
       async function getCharacters() {
         const response = await fetch(
-          "https://u50g7n0cbj.execute-api.us-east-1.amazonaws.com/v2/measurements?date_from=2000-01-01T00%3A00%3A00%2B00%3A00&date_to=2022-03-15T04%3A42%3A00%2B00%3A00&limit=200&page=1&offset=0&sort=desc&radius=1000&location_id=" + id + "&order_by=datetime"
-
+         
+          "https://docs.openaq.org/v2/measurements?date_from=2020-01-01T00%3A00%3A00%2B00%3A00&date_to=2022-03-16T01%3A49%3A00%2B00%3A00&limit=600&page=1&offset=0&sort=desc&radius=1000&location_id=" + id + "&order_by=datetime"
         );
         const body = await response.json();
-
+         
         if (!unmounted) {
+          console.log(body)
           setItems(
             body.results.map(({ location, parameter, value, date, unit, country, city, entity, sensorType  }) => ({ location: location , parameter: parameter, value: value, date: date , unit: unit, country: country, city: city, entity: entity, sensorType: sensorType}))
           );
+          setFound(body["meta"]); 
           setLoading(false);
         }
       }
@@ -73,12 +77,17 @@ const CardData = () => {
     let grade = items.map(function(i) { 
         return i.sensorType;
     });
- 
+    
+    
+  const itemsTotal = found["found"];
+  
+  
+
   return (
       <Container>
           <Wrapper>
             <Header props={[location[0],country[0],city[0],entity[0],grade[0]]}/>
-            <TopBar props={id}/>
+            <TopBar props={[id,itemsTotal]}/>
             <GraphTabs props={items}/>
           </Wrapper>
       </Container>

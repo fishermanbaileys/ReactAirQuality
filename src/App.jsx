@@ -19,7 +19,7 @@ const Wrapper = styled.div`
   
 `;
 
-
+//wouldnt it be could if we could display air quality like a dopler rader displays temp and precipitation
 
 const App = () => {
 

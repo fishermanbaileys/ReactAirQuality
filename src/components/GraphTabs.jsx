@@ -23,21 +23,38 @@ const GraphTabs = ({props}) => {
   props.forEach(item => {
     for (let key in item) {
       if (key === 'parameter'){
-        
         Parameters.add(item.parameter);
       }
     }
   });
 
-
+  //for graphs
   const params = Array.from(Parameters)
-  //console.log(params);
+  //for tabs
+  const correctParams = Array.from(Parameters)
+
+
+  correctParams.forEach(item => {
+    if(item === "um010"){
+      let index = correctParams.findIndex((el) => el === item);
+      correctParams.splice(index, 1, "PM1 Count");
+    }
+    else if (item === "um025"){
+      let index = correctParams.findIndex((el) => el === item);
+      correctParams.splice(index, 1, "PM2.5 Count");
+    }
+    else if(item === "um100"){
+      let index = correctParams.findIndex((el) => el === item);
+      correctParams.splice(index, 1, "PM10 Count");
+    }
+  });
+
   return (
     <Container>
         <Wrapper>
             <Tabs>             
               <TabList> 
-                {params.map((item) => (
+                {correctParams.map((item) => (
                   <Tab>{item}</Tab>
                   ))}
               </TabList>

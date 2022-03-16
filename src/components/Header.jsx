@@ -24,6 +24,7 @@ const H1 = styled.h1`
 const H2 = styled.h2`
   margin:0;
 `;
+
 const SensorType = styled.div`
     
     color: #236f8a;

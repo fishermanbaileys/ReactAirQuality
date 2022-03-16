@@ -152,20 +152,20 @@ const Tile = ({id, city, name, entity, country, sensorType, lastUpdated, firstUp
         <Wrapper>
             <BoxContainer>
                 <BoxWrapper>
-                <Updated>Last Updated: {lastUpdated}</Updated>
-                <Name>{name || "N/A"}</Name>
-                <Location>Location ID {id}</Location>
-                <LocatedIn>Located in {city}, {country}</LocatedIn>
-                <OwnedBy>Owned By:<Owned>{entity}</Owned></OwnedBy>
-                <OwnedBy>Sensor Grade:<SensorType>{sensorType}</SensorType></OwnedBy>
-                <TotalMeasure><Bold>Started Collecting Data:</Bold>{firstUpdated}</TotalMeasure>
-                <TotalMeasure><Bold>Total Measurements:</Bold> {measurements}</TotalMeasure>
-                <TotalMeasure><Bold>Types Of Data: </Bold> {comaParams || "N/A"}</TotalMeasure>
-                <ButtonWrap>
-                <Link to={`/location/${id}`}>
-                <Button>View More Data</Button>
-                </Link>
-                </ButtonWrap>
+                    <Updated>Last Updated: {lastUpdated}</Updated>
+                    <Name>{name || "N/A"}</Name>
+                    <Location>Location ID {id}</Location>
+                    <LocatedIn>Located in {city}, {country}</LocatedIn>
+                    <OwnedBy>Owned By:<Owned>{entity}</Owned></OwnedBy>
+                    <OwnedBy>Sensor Grade:<SensorType>{sensorType}</SensorType></OwnedBy>
+                    <TotalMeasure><Bold>Started Collecting Data:</Bold>{firstUpdated}</TotalMeasure>
+                    <TotalMeasure><Bold>Total Measurements:</Bold> {measurements}</TotalMeasure>
+                    <TotalMeasure><Bold>Types Of Data: </Bold> {comaParams || "N/A"}</TotalMeasure>
+                    <ButtonWrap>
+                    <Link to={`/location/${id}`}>
+                    <Button>View More Data</Button>
+                    </Link>
+                    </ButtonWrap>
                 </BoxWrapper>
             </BoxContainer>
         </Wrapper>
