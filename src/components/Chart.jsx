@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import 'chartjs-adapter-moment';
 import { Scatter, Line } from 'react-chartjs-2';
 import moment from 'moment';
+
 import {
   Chart as ChartJS,
   TimeScale,
@@ -80,7 +81,7 @@ let test2 = datas.map((x, index) =>({x: x.date.local, y: x.value}));
           
           type: 'time',
                 time: {
-                    unit: 'day'
+                    unit: 'week'
           },
 
           title: {

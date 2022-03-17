@@ -89,21 +89,21 @@ const InnerBox = styled.div`
 `;
 
 
-const TopBar = ({props}) => {
+const TopBar = ({propsTop}) => {
 
     const [loading, setLoading] = useState(true);
     const [items, setItems] = useState([]);
     
-
+    //console.log(propsTop)
     useEffect(() => {
       let unmounted = false;
       async function getCharacters() {
         const response = await fetch(
-          "https://u50g7n0cbj.execute-api.us-east-1.amazonaws.com/v2/latest?limit=100&page=1&offset=0&sort=desc&radius=1000&location_id=" + props[0] + "&order_by=lastUpdated&dumpRaw=false"
+          "https://u50g7n0cbj.execute-api.us-east-1.amazonaws.com/v2/latest?limit=100&page=1&offset=0&sort=desc&radius=1000&location_id=" + propsTop[0] + "&order_by=lastUpdated&dumpRaw=false"
 
         );
         const body = await response.json();
-
+      
         if (!unmounted) {
           setItems(
             body.results.map(recent => ({ coordinates: recent.coordinates, measurements: recent.measurements}))
@@ -116,7 +116,7 @@ const TopBar = ({props}) => {
       return () => {
         unmounted = true;
       };
-    }, [props]);
+    }, [propsTop]);
   
     let coords = items.map(function(i) {
         return i.coordinates;
@@ -135,7 +135,7 @@ const TopBar = ({props}) => {
                         <InnerBox>
                           <H2>Details</H2>
                           <P>Total Measurements:</P>
-                          <Nums>{new Intl.NumberFormat().format(props[1])}</Nums>
+                          <Nums>{new Intl.NumberFormat().format(propsTop[1])}</Nums>
                         </InnerBox>
                         <InnerBox>
                         <P>Coordinates:</P>

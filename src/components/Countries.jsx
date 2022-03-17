@@ -56,7 +56,7 @@ const Countries = (props) => {
       let unmounted = false;
       async function getCharacters() {
         const response = await fetch(
-          "https://api.openaq.org/v1/countries?limit=9999"
+          "https://api.openaq.org/v2/countries?limit=9999"
         );
         const body = await response.json();
         if (!unmounted) {

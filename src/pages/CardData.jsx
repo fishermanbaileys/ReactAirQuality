@@ -36,13 +36,12 @@ const CardData = () => {
       let unmounted = false;
       async function getCharacters() {
         const response = await fetch(
-         
-          "https://docs.openaq.org/v2/measurements?date_from=2020-01-01T00%3A00%3A00%2B00%3A00&date_to=2022-03-16T01%3A49%3A00%2B00%3A00&limit=600&page=1&offset=0&sort=desc&radius=1000&location_id=" + id + "&order_by=datetime"
+          "https://docs.openaq.org/v2/measurements?date_from=2020-01-01T00%3A00%3A00%2B00%3A00&date_to=2022-03-16T01%3A49%3A00%2B00%3A00&limit=800&page=1&offset=0&sort=desc&radius=1000&location_id=" + id + "&order_by=datetime65684"
         );
         const body = await response.json();
-         
+         console.log(body)
         if (!unmounted) {
-          console.log(body)
+          
           setItems(
             body.results.map(({ location, parameter, value, date, unit, country, city, entity, sensorType  }) => ({ location: location , parameter: parameter, value: value, date: date , unit: unit, country: country, city: city, entity: entity, sensorType: sensorType}))
           );
@@ -57,7 +56,7 @@ const CardData = () => {
     }, [id]);
 
 
-
+    
   
     let location = items.map(function(i) {
         return i.location;
@@ -87,7 +86,7 @@ const CardData = () => {
       <Container>
           <Wrapper>
             <Header props={[location[0],country[0],city[0],entity[0],grade[0]]}/>
-            <TopBar props={[id,itemsTotal]}/>
+            <TopBar propsTop={[id,itemsTotal]}/>
             <GraphTabs props={items}/>
           </Wrapper>
       </Container>

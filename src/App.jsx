@@ -3,7 +3,7 @@ import './App.css';
 import styled from 'styled-components';
 import CardSelector from './pages/CardSelector';
 import CardData from './pages/CardData';
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Tiles from './components/Tiles';
 
 const Container = styled.div`
