@@ -4,17 +4,8 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Header from '../components/Header'
 import GraphTabs from '../components/GraphTabs';
-import {
-  Chart as ChartJS,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Tooltip,
-  Legend,
-} from 'chart.js/auto';
-import { Scatter, Line } from 'react-chartjs-2';
 import TopBar from '../components/TopBar';
-
+import ReactLoading from 'react-loading';
 
 
 const Container = styled.div`
@@ -23,6 +14,18 @@ const Container = styled.div`
 
 const Wrapper = styled.div`
     
+`;
+
+const Loading = styled.div`
+  padding:40px;
+`;
+
+const LoadingGraph = styled.div`
+  display:flex;
+  width:100vw;
+  height:600px;
+  align-items:center;
+  justify-content:center;
 `;
 
 const CardData = () => {
@@ -36,10 +39,10 @@ const CardData = () => {
       let unmounted = false;
       async function getCharacters() {
         const response = await fetch(
-          "https://docs.openaq.org/v2/measurements?date_from=2020-01-01T00%3A00%3A00%2B00%3A00&date_to=2022-03-16T01%3A49%3A00%2B00%3A00&limit=800&page=1&offset=0&sort=desc&radius=1000&location_id=" + id + "&order_by=datetime65684"
+          "https://docs.openaq.org/v2/measurements?date_from=2000-01-01T00%3A00%3A00%2B00%3A00&date_to=2022-03-17T23%3A55%3A00%2B00%3A00&limit=1000&page=1&offset=0&sort=desc&radius=1000&location_id=" + id + "&order_by=datetime"
         );
         const body = await response.json();
-         console.log(body)
+    
         if (!unmounted) {
           
           setItems(
@@ -85,9 +88,30 @@ const CardData = () => {
   return (
       <Container>
           <Wrapper>
-            <Header props={[location[0],country[0],city[0],entity[0],grade[0]]}/>
+          { loading ? (
+            <Loading>
+              <ReactLoading
+                type={"spin"}
+                color={"rgb(53,162,235)"}
+                margin-left={100}
+                height={50}
+                width={50}
+              /></Loading>
+            ) :
+            <Header props={[location[0],country[0],city[0],entity[0],grade[0]]}/>}
             <TopBar propsTop={[id,itemsTotal]}/>
-            <GraphTabs props={items}/>
+
+            { loading ? (
+            <LoadingGraph>
+              <ReactLoading
+                type={"spin"}
+                color={"rgb(53,162,235)"}
+                margin-left={100}
+                height={50}
+                width={50}
+              /></LoadingGraph>
+            ) :
+            <GraphTabs props={items}/>}
           </Wrapper>
       </Container>
   )

@@ -74,19 +74,19 @@ let test2 = datas.map((x, index) =>({x: x.date.local, y: x.value}));
               }
           },
           ticks: {
-              precision: 0
+              precision: 6,
           }
       },
         xAxes: {
           
           type: 'time',
                 time: {
-                    unit: 'week'
+                    unit: ''
           },
 
           title: {
             display: true,
-            text: "Dates",
+            text: "Dates/Times",
             font: {
                 size: 15
           }
